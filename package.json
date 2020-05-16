@@ -20,7 +20,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "yarn run build",
+    "predeploy": "yarn run  cleanup && yarn run build",
     "deploy": "gh-pages -b gh-pages -d build",
     "cleanup": "rm -rf node_modules/gh-pages/.cache"
   },
