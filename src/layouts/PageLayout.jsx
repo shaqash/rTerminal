@@ -11,7 +11,7 @@ const PageLayout = ({ children }) => (
       <HeaderBar />
     </Segment>
     <Segment inverted>
-      <div style={{ height: '75vh' }}>
+      <div className="terminalWindow">
         {children}
       </div>
     </Segment>

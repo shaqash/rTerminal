@@ -19,3 +19,8 @@ code {
     monospace;
   white-space: pre-wrap;
 }
+
+.terminalWindow {
+  overflow-y: auto;
+  height: 75vh;
+}

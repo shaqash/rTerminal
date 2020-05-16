@@ -9,12 +9,14 @@ const INITIAL_CACHE = [
 const CacheContext = createContext({
   cache: Object,
   setCache: Function,
+  ls: String,
+  resetCache: Function,
 });
 export default CacheContext;
 
 export function CacheProvider({ children }) {
   const [cache, setCache] = useState(INITIAL_CACHE);
-  const lsFunc = (c) => c.map((item) => `${item.name} `);
+  const lsFunc = (c) => c.map((item) => item.name).join(' ');
   const ls = React.useCallback(
     lsFunc(cache),
     [cache],
@@ -22,7 +24,7 @@ export function CacheProvider({ children }) {
   const resetCache = () => setCache(INITIAL_CACHE);
   return (
     <CacheContext.Provider value={{
-      cache, setCache, ls, lsFunc, resetCache,
+      cache, setCache, ls, resetCache,
     }}
     >
       {children}
