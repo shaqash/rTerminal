@@ -9,18 +9,32 @@ import { WindowProvider } from './contexts/WindowContext';
 import Shell from './components/Shell';
 import { CacheProvider } from './contexts/CacheContex';
 
-const App = () => (
-  <div className="App">
-    <Container>
-      <WindowProvider>
-        <CacheProvider>
-          <PageLayout>
-            <Shell />
-          </PageLayout>
-        </CacheProvider>
-      </WindowProvider>
-    </Container>
-  </div>
-);
+const App = () => {
+  function randomBgColor() {
+    const x = Math.floor(Math.random() * 50);
+    const y = Math.floor(Math.random() * 100);
+    const z = Math.floor(Math.random() * 256);
+    const bgColor = `rgb(${x},${y},${z})`;
+
+    document.body.style.background = bgColor;
+  }
+
+  React.useEffect(() => {
+    randomBgColor();
+  }, []);
+  return (
+    <div className="App">
+      <Container>
+        <WindowProvider>
+          <CacheProvider>
+            <PageLayout>
+              <Shell />
+            </PageLayout>
+          </CacheProvider>
+        </WindowProvider>
+      </Container>
+    </div>
+  );
+};
 
 export default App;
