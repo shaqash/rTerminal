@@ -4,13 +4,23 @@ import Prompt from './Prompt';
 import useGit from '../hooks/useGit';
 import WindowContext from '../contexts/WindowContext';
 import CacheContext from '../contexts/CacheContex';
-import { INITIAL_OUTPUT, OPTIONS, TIMEOUT_404 } from '../constants/consts';
+import {
+  INITIAL_OUTPUT, OPTIONS, TIMEOUT_404, README_URL,
+} from '../constants/consts';
 
 export default function Shell() {
   const [buffer, setBuffer] = React.useState(INITIAL_OUTPUT);
   const { cache, ls, resetCache } = React.useContext(CacheContext);
   const { setTitle } = useContext(WindowContext);
   const setCacheToGit = useGit();
+  const [help, setHelp] = React.useState(`${OPTIONS.map((file) => `${file} `)}`);
+
+  React.useEffect(() => {
+    fetch(README_URL)
+      .then((data) => data.text())
+      .then((text) => setHelp(text))
+      .catch(() => setHelp(`${OPTIONS.map((file) => `${file} `)}`));
+  }, []);
 
   const commandSwitch = ([cmd, param]) => {
     switch (cmd) {
@@ -29,7 +39,7 @@ export default function Shell() {
       case 'open':
         return JSON.stringify(cache.find((item) => item.name === param), null, 2);
       case 'help':
-        return `${OPTIONS.map((file) => `${file} `)}`;
+        return `${help}`;
       case 'clear':
         return '';
       default:

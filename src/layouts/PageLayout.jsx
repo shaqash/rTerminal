@@ -6,11 +6,11 @@ import React from 'react';
 import HeaderBar from './HeaderBar';
 
 const PageLayout = ({ children }) => (
-  <SegmentGroup raised padded>
+  <SegmentGroup raised>
     <Segment clearing basic tertiary>
       <HeaderBar />
     </Segment>
-    <Segment content inverted>
+    <Segment inverted>
       <div style={{ height: '65vh' }}>
         {children}
       </div>
