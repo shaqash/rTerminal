@@ -2,7 +2,7 @@ import React, { createContext, useState } from 'react';
 import PropTypes from 'prop-types';
 
 const INITIAL_CACHE = [
-  { name: 'git-projects' },
+  { name: 'projects' },
   { name: 'posts' },
 ];
 

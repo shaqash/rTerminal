@@ -33,7 +33,7 @@ export default function Shell() {
           resetCache();
           return INITIAL_OUTPUT;
         }
-        return param === 'git-projects' && setCacheToGit();
+        return param === 'projects' && setCacheToGit();
       case 'echo':
         return param;
       case 'open':
