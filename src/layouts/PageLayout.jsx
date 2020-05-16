@@ -1,19 +1,21 @@
 import PropTypes from 'prop-types';
-import { Grid, Segment } from 'semantic-ui-react';
+import {
+  Segment, SegmentGroup,
+} from 'semantic-ui-react';
 import React from 'react';
-import Panel from './Panel';
+import HeaderBar from './HeaderBar';
 
 const PageLayout = ({ children }) => (
-  <Segment raised padded>
-    <Grid divided inverted stackable columns="2">
-      <Grid.Column only="computer" width="4" textAlign="center">
-        <Panel />
-      </Grid.Column>
-      <Grid.Column stretched width="12">
+  <SegmentGroup raised padded>
+    <Segment clearing basic tertiary>
+      <HeaderBar />
+    </Segment>
+    <Segment content inverted>
+      <div style={{ height: '65vh' }}>
         {children}
-      </Grid.Column>
-    </Grid>
-  </Segment>
+      </div>
+    </Segment>
+  </SegmentGroup>
 );
 PageLayout.propTypes = {
   children: PropTypes.node.isRequired,
