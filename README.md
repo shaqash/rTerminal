@@ -9,4 +9,5 @@ React terminal app
 `cd [directory]` - Change directory. Leave argument empty to go back home  
 `open [filename]` - Display file contents  
 `clear` - Clear buffer  
-`echo` - Echo a word
+`echo` - Echo a word  
+`su [github_username]` - Switch user  

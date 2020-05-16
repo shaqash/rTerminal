@@ -8,6 +8,7 @@ import PageLayout from './layouts/PageLayout';
 import { WindowProvider } from './contexts/WindowContext';
 import Shell from './components/Shell';
 import { CacheProvider } from './contexts/CacheContex';
+import { UserProvider } from './contexts/UserContext';
 
 const App = () => {
   function randomBgColor() {
@@ -26,11 +27,13 @@ const App = () => {
     <div className="App">
       <Container>
         <WindowProvider>
-          <CacheProvider>
-            <PageLayout>
-              <Shell />
-            </PageLayout>
-          </CacheProvider>
+          <UserProvider>
+            <CacheProvider>
+              <PageLayout>
+                <Shell />
+              </PageLayout>
+            </CacheProvider>
+          </UserProvider>
         </WindowProvider>
       </Container>
     </div>

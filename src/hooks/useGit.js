@@ -1,8 +1,7 @@
 import React from 'react';
 import CacheContext from '../contexts/CacheContex';
-
-const user = 'shaqash';
-const url = `https://api.github.com/users/${user}`;
+import UserContext from '../contexts/UserContext';
+import { BASE_URL } from '../constants/consts';
 
 const repoMap = (p) => ({
   name: p.name,
@@ -12,16 +11,15 @@ const repoMap = (p) => ({
   language: p.language,
 });
 
-const repoFilter = (p) => p.owner.login === user;
-
-async function fetchProjects() {
-  let projects = sessionStorage.getItem('shaq.starred');
+async function fetchProjects(ghUser, repoFilter, option = 'repos') {
+  let projects = sessionStorage.getItem(`${ghUser}.starred`);
   if (!projects) {
-    projects = await fetch(`${url}/starred`)
+    projects = await fetch(`${BASE_URL}${ghUser}/${option}`)
       .then((data) => data.json()) // Convert to JSON
       .then((json) => json.filter(repoFilter)) // Filter by owner = me
-      .then((filtered) => filtered.map(repoMap)); // Map only required fields
-    sessionStorage.setItem('shaq.starred', JSON.stringify(projects));
+      .then((filtered) => filtered.map(repoMap)) // Map only required fields
+      .catch((err) => new Error(err));
+    sessionStorage.setItem(`${ghUser}.starred`, JSON.stringify(projects));
   } else {
     projects = JSON.parse(projects);
   }
@@ -34,10 +32,12 @@ async function fetchProjects() {
  */
 const Git = () => {
   const { setCache } = React.useContext(CacheContext);
+  const { githubUser } = React.useContext(UserContext);
+  const repoFilter = (p) => p.owner.login === githubUser;
   const setCacheToGit = () => {
-    fetchProjects().then((projects) => {
-      setCache(projects);
-    });
+    fetchProjects(githubUser, repoFilter)
+      .then((projects) => setCache(projects))
+      .catch((err) => new Error(err));
   };
 
   return setCacheToGit;

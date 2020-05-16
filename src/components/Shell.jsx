@@ -7,9 +7,11 @@ import CacheContext from '../contexts/CacheContex';
 import {
   INITIAL_OUTPUT, OPTIONS, TIMEOUT_404, README_URL,
 } from '../constants/consts';
+import UserContext from '../contexts/UserContext';
 
 export default function Shell() {
   const [buffer, setBuffer] = React.useState(INITIAL_OUTPUT);
+  const { setGithubUser, githubUser } = React.useContext(UserContext);
   const { cache, ls, resetCache } = React.useContext(CacheContext);
   const { setTitle } = useContext(WindowContext);
   const setCacheToGit = useGit();
@@ -43,11 +45,15 @@ export default function Shell() {
         return JSON.stringify(cache.find((item) => item.name === param), null, 2);
       case 'read':
         if (param && !ls.includes(param)) throw new Error('File not found');
-        return fetchReadme(`https://raw.githubusercontent.com/shaqash/${param}/master/README.md`);
+        return fetchReadme(`https://raw.githubusercontent.com/${githubUser}/${param}/master/README.md`);
       case 'help':
         return `${help}`;
       case 'clear':
         return '';
+      case 'su':
+        resetCache();
+        setGithubUser(param);
+        return INITIAL_OUTPUT;
       default:
         throw new Error('Command not found');
     }
