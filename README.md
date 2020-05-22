@@ -10,4 +10,5 @@ React terminal app
 `open [filename]` - Display file contents  
 `clear` - Clear buffer  
 `echo` - Echo a word  
+`read` - Display project readme  
 `su [github_username]` - Switch user  
